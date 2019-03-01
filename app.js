@@ -15,19 +15,29 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //importar rutas
+
 var appRoutes = require('./routes/app');
+var medicoRoutes = require('./routes/medico');
+var hospitalRoutes = require('./routes/hospital');
 var usuarioRoutes = require('./routes/usuario');
 var loginRoutes = require('./routes/login');
-
-//Cónexion a la base de datos
+var busquedaRoutes = require('./routes/busqueda');
+var uploadRoutes = require('./routes/upload');
+var imagenesRoutes = require('./routes/imagenes')
+    //Cónexion a la base de datos
 mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res) => {
     if (err) throw err;
     console.log('Base de datos 3000 online:');
 })
 
-//Rutas
+// Rutas
+app.use('/medico', medicoRoutes);
+app.use('/hospital', hospitalRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/login', loginRoutes);
+app.use('/busqueda', busquedaRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/img', imagenesRoutes);
 app.use('/', appRoutes);
 
 //Escuchar peticiones
